@@ -68,7 +68,8 @@ class QM:
               self.__tables[i][j][k][2]=mark
             if(self.__tables[i][j+1][l][2]!=1):
               self.__tables[i][j+1][l][2]=mark
-            self.__tables[i+1][j].append(ret) 
+            if(mark==1):
+              self.__tables[i+1][j].append(ret) 
 
   def __comp(self,a,b,c,d):
     ind = str(c)+','+str(d)
