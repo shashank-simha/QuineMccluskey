@@ -2,10 +2,13 @@ class QM:
   def __init__(self):
     self.__v = int(input('Enter the number of variables: '))
     temp =str(input('Enter min-terms separated by spaces :'))
-    self.__mt=temp.split(' ')
-    for i in range(len(self.__mt)):
-      self.__mt[i]=int(self.__mt[i])
-    self.__mt.sort()
+    if(temp==''):
+      self.__mt=[]
+    else:
+      self.__mt=temp.split(' ')
+      for i in range(len(self.__mt)):
+        self.__mt[i]=int(self.__mt[i])
+      self.__mt.sort()
     self.__dnt = ''
     for i in range(self.__v):
       self.__dnt+='x'
@@ -196,31 +199,37 @@ class QM:
   def solution(self):
     print()
     print('_______________________')
+    print()
     print('Minimal Expression: ',self.__answer)
     print('_______________________') 
 
   def __expression(self):
-    letters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    self.__vars=[]
-    for i in range(self.__v):
-      self.__vars.append(letters[i])
-    temp = []
-    for i in range(len(self.__EPI)):
-      temp.append(self.__EPI[i][1])
-    for i in range(len(temp)):
-      exp=''
-      ind=0
-      for j in self.__vars:
-        if(temp[i][ind]=='1'):
-          exp+=j
-        elif(temp[i][ind]=='0'):
-          exp+=j
-          exp+='\''
-        ind+=1
-      temp[i]=exp
-    for i in range(len(temp)):
-      self.__answer+=temp[i]
-      if(i<(len(temp)-1)):
-        self.__answer+='+'
-    self.__answer.replace('+',' + ')
+    if(len(self.__mt)==0):
+      self.__answer='0'
+    elif(len(self.__mt)==2**self.__v):
+      self.__answer='1'
+    else:
+      letters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+      self.__vars=[]
+      for i in range(self.__v):
+        self.__vars.append(letters[i])
+      temp = []
+      for i in range(len(self.__EPI)):
+        temp.append(self.__EPI[i][1])
+      for i in range(len(temp)):
+        exp=''
+        ind=0
+        for j in self.__vars:
+          if(temp[i][ind]=='1'):
+            exp+=j
+          elif(temp[i][ind]=='0'):
+            exp+=j
+            exp+='\''
+          ind+=1
+        temp[i]=exp
+      for i in range(len(temp)):
+        self.__answer+=temp[i]
+        if(i<(len(temp)-1)):
+          self.__answer+='+'
+      self.__answer.replace('+',' + ')
     self.solution()
